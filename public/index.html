@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#faf7f3"><meta name="description" content="今日のことを、少しずつ。りょうこと過ごす、やさしいチャットの時間。">
+  <title>ふたり時間 — 今日のことを、少しずつ。</title>
+  <link rel="stylesheet" href="./styles.css"><script type="module" src="./app.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="ふたり時間 ホーム"><span class="brand-icon">ふ</span><span>ふたり時間<small>FUTARI JIKAN</small></span></a>
+    <p class="nav-label">あなたの居場所</p>
+    <div class="selected-nav"><span>♡</span> りょうことのトーク <span class="nav-dot"></span></div>
+    <div class="side-note"><span>✧</span><p>なんでもない日も、<br>誰かと話すと特別になる。</p></div>
+    <div class="side-footer"><span class="little-flower">✿</span><p>今日も、あなたのペースで。<small>ふたりだけの、やさしい時間</small></p></div>
+  </aside>
+  <main>
+    <header class="topbar"><span>ふたりのトーク</span><span class="demo-badge">DEMO MODE</span></header>
+    <section class="chat-shell" aria-label="りょうことのチャット">
+      <p id="startup-notice" role="alert">会話機能を読み込み中です。この案内が消えない場合、この表示先ではJavaScriptが動いていません。単体デモHTMLをダウンロードし、Chrome・Safari・Edgeで開いてください。</p>
+      <div class="profile"><div class="avatar avatar-large" aria-hidden="true">✿</div><div><h1>りょうこ</h1><p><i></i> あなたのお話、聞かせてね</p></div><button id="reset" class="reset" type="button">会話をリセット</button></div>
+      <div class="conversation" id="conversation" role="log" aria-live="polite" aria-relevant="additions"><div class="day-label">今日のふたり時間</div></div>
+      <div class="composer-area"><div id="suggestions" class="suggestions"><button type="button">今日は少し疲れたよ</button><button type="button">週末、何しよう？</button><button type="button">ちょっと話したいな</button></div>
+        <form id="chat-form"><label class="sr-only" for="message">りょうこへのメッセージ</label><textarea id="message" rows="1" maxlength="1000" placeholder="りょうこに話しかけてみよう…" required></textarea><button id="send" disabled type="submit" aria-label="メッセージを送信">↑</button></form>
+        <div class="composer-meta"><span id="status" role="status">Enter で送信 · Shift + Enter で改行</span><span id="count">0 / 1000</span></div>
+        <p class="disclaimer">りょうこは架空のAIキャラクターです。デモでは決まったパターンで返信します。<br>会話はこのブラウザに保存されます。大切な個人情報は入力しないでください。</p>
+      </div>
+    </section>
+  </main>
+  <dialog id="reset-dialog"><h2>会話をリセットしますか？</h2><p>このブラウザに保存した会話を削除します。</p><div><button id="cancel-reset" type="button">キャンセル</button><button id="confirm-reset" type="button">リセットする</button></div></dialog>
+</body>
+</html>

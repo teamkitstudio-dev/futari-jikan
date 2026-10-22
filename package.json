@@ -1,0 +1,14 @@
+{
+  "name": "futari-jikan",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test",
+    "build:demo": "node scripts/build-demo.js",
+    "build:pages": "node scripts/build-demo.js --pages"
+  }
+}
