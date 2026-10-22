@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer } from '../server.js';
-import { createReply } from '../public/replies.js';
+import { createReply, selectExpression } from '../public/replies.js';
 
 test('デモ応答は疲労、休日、あいさつを区別する', () => {
   assert.match(createReply('疲れた'), /おつかれさま/);
@@ -13,6 +13,14 @@ test('デモ応答は疲労、休日、あいさつを区別する', () => {
 test('危機を示す言葉には現実の支援を案内する', () => {
   assert.match(createReply('死にたい'), /緊急窓口/);
 });
+test('つらい話を優先し、感謝や好意で表情が変わる', () => {
+  assert.equal(selectExpression('今日は疲れた'), 'concerned');
+  assert.equal(selectExpression('ありがとう'), 'happy');
+  assert.equal(selectExpression('りょうこが好き'), 'shy');
+  assert.equal(selectExpression('好きだけど今日は悲しい'), 'concerned');
+  assert.equal(selectExpression('好きじゃない'), 'neutral');
+  assert.equal(selectExpression('週末の予定は？'), 'neutral');
+});
 test('HTTP経由で画面、会話、入力検証、パス制限が動く', async t => {
   const server = createServer();
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
@@ -21,7 +29,7 @@ test('HTTP経由で画面、会話、入力検証、パス制限が動く', asyn
   const page = await fetch(base);
   assert.equal(page.status, 200);
   assert.match(await page.text(), /ふたり時間/);
-  for (const path of ['/app.js', '/styles.css']) assert.equal((await fetch(base + path)).status, 200);
+  for (const path of ['/app.js', '/styles.css', '/replies.js', '/ryoko-expressions.png']) assert.equal((await fetch(base + path)).status, 200);
   const post = message => fetch(base + '/api/chat', { method: 'POST', body: JSON.stringify({ message }) });
   const reply = await post('今日は疲れたよ');
   assert.equal(reply.status, 200); assert.match((await reply.json()).reply, /おつかれさま/);

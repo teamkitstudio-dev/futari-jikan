@@ -11,3 +11,10 @@ export function createReply(message) {
   if (/こんにちは|こんばんは|はじめまして/.test(text)) return '来てくれてありがとう。りょうこだよ。今日はどんな気分？気を張らずに、ゆっくり話してね。';
   return 'うん、聞いているよ。話してくれてありがとう。そのとき、どんな気持ちだった？もう少し聞かせてくれたらうれしいな。';
 }
+
+export function selectExpression(message) {
+  if (/死にたい|自殺|消えたい|疲|つかれ|しんど|つら|辛|悲|寂|さみし|不安|失敗/.test(message)) return 'concerned';
+  if (/好き|かわいい|可愛い|愛して|照れ/.test(message) && !/好きじゃない|好きではない/.test(message)) return 'shy';
+  if (/ありがと|うれし|嬉|楽しい|楽しみ|やった|おはよ|こんにちは/.test(message)) return 'happy';
+  return 'neutral';
+}

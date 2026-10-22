@@ -5,7 +5,7 @@ import { resolve, extname } from 'node:path';
 import { createReply } from './public/replies.js';
 
 const root = fileURLToPath(new URL('./public/', import.meta.url));
-const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8' };
+const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.png': 'image/png' };
 export function createServer() {
   return http.createServer(async (req, res) => {
     res.setHeader('X-Content-Type-Options', 'nosniff');
@@ -35,7 +35,7 @@ export function createServer() {
     if (req.method !== 'GET' && req.method !== 'HEAD') { res.writeHead(405).end(); return; }
     try {
       const pathname = new URL(req.url, 'http://localhost').pathname;
-      const routes = { '/': 'index.html', '/styles.css': 'styles.css', '/app.js': 'app.js' };
+      const routes = { '/': 'index.html', '/styles.css': 'styles.css', '/app.js': 'app.js', '/replies.js': 'replies.js', '/ryoko-expressions.png': 'ryoko-expressions.png' };
       const name = routes[pathname];
       if (!name) { res.writeHead(404).end('Not found'); return; }
       const file = await readFile(resolve(root, name));

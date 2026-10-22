@@ -18,7 +18,7 @@
     <header class="topbar"><span>ふたりのトーク</span><span class="demo-badge">DEMO MODE</span></header>
     <section class="chat-shell" aria-label="りょうことのチャット">
       <p id="startup-notice" role="alert">会話機能を読み込み中です。この案内が消えない場合、この表示先ではJavaScriptが動いていません。単体デモHTMLをダウンロードし、Chrome・Safari・Edgeで開いてください。</p>
-      <div class="profile"><div class="avatar avatar-large" aria-hidden="true">✿</div><div><h1>りょうこ</h1><p><i></i> あなたのお話、聞かせてね</p></div><button id="reset" class="reset" type="button">会話をリセット</button></div>
+      <div class="profile"><div id="portrait" class="ryoko-photo portrait" data-expression="neutral" role="img" aria-label="りょうこ：お話を聞いているよ"></div><div><h1>りょうこ</h1><p><i></i> <span id="expression-label">お話を聞いているよ</span></p><p class="photo-note">架空のキャラクター・生成画像</p></div><button id="reset" class="reset" type="button">会話をリセット</button></div>
       <div class="conversation" id="conversation" role="log" aria-live="polite" aria-relevant="additions"><div class="day-label">今日のふたり時間</div></div>
       <div class="composer-area"><div id="suggestions" class="suggestions"><button type="button">今日は少し疲れたよ</button><button type="button">週末、何しよう？</button><button type="button">ちょっと話したいな</button></div>
         <form id="chat-form"><label class="sr-only" for="message">りょうこへのメッセージ</label><textarea id="message" rows="1" maxlength="1000" placeholder="りょうこに話しかけてみよう…" required></textarea><button id="send" disabled type="submit" aria-label="メッセージを送信">↑</button></form>

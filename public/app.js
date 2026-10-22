@@ -1,4 +1,12 @@
+import { selectExpression } from './replies.js';
 const $ = (id) => document.getElementById(id);
+const expressionLabels = { neutral: 'お話を聞いているよ', happy: 'うれしいな', concerned: 'そばで聞いているよ', shy: 'ちょっと照れちゃう' };
+function showExpression(expression = 'neutral') {
+  if (!Object.hasOwn(expressionLabels, expression)) expression = 'neutral';
+  $('portrait').dataset.expression = expression;
+  $('portrait').setAttribute('aria-label', `りょうこ：${expressionLabels[expression]}`);
+  $('expression-label').textContent = expressionLabels[expression];
+}
 const storageKey = 'futari-jikan.messages.v1';
 const greeting = 'おかえりなさい。りょうこだよ。🌷\n今日も会いに来てくれて、うれしいな。\nどんな一日だった？ゆっくり聞かせてね。';
 let messages = [];
@@ -15,7 +23,7 @@ function addMessage(message) {
   const row = document.createElement('div');
   row.className = `message ${message.role}`;
   if (message.role === 'assistant') {
-    const avatar = document.createElement('div'); avatar.className = 'avatar'; avatar.textContent = '✿'; avatar.setAttribute('aria-hidden', 'true'); row.append(avatar);
+    const avatar = document.createElement('div'); avatar.className = 'avatar ryoko-photo'; avatar.dataset.expression = message.expression || 'neutral'; avatar.setAttribute('aria-hidden', 'true'); row.append(avatar);
   }
   const content = document.createElement('div'); content.className = 'message-content';
   if (message.role === 'assistant') { const name = document.createElement('p'); name.className = 'message-name'; name.textContent = 'りょうこ'; content.append(name); }
@@ -27,6 +35,7 @@ function render() {
   $('conversation').querySelectorAll('.message').forEach(el => el.remove());
   addMessage({ role: 'assistant', text: greeting, time: messages[0]?.time ?? Date.now() });
   messages.forEach(addMessage);
+  showExpression(messages.findLast(m => m.role === 'assistant')?.expression);
 }
 function update() {
   $('send').disabled = busy || !$('message').value.trim();
@@ -61,8 +70,9 @@ $('chat-form').addEventListener('submit', async event => {
       data = await response.json();
     }
     if (typeof data.reply !== 'string') throw new Error('Invalid reply');
-    const reply = { role: 'assistant', text: data.reply, time: Date.now() };
+    const reply = { role: 'assistant', text: data.reply, time: Date.now(), expression: selectExpression(text) };
     messages.push(user, reply); messages = messages.slice(-100); addMessage(reply);
+    showExpression(reply.expression);
     $('status').textContent = 'Enter で送信 · Shift + Enter で改行'; save();
   } catch {
     render(); $('message').value = text; $('status').textContent = '送信できませんでした。もう一度送信してください。';
